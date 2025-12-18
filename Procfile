@@ -1,0 +1,1 @@
+web: julia --project=. ISO13373.jl
