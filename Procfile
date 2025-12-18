@@ -1,1 +1,1 @@
-web: julia --project=. ISO13373.jl
+web: julia --project=. src/ISO13373.jl
