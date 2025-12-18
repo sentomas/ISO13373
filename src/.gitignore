@@ -1,0 +1,46 @@
+# --- Julia Specifics ---
+# Precompilation and coverage files
+*.ji
+*.ji.*
+*.jl.cov
+*.jl.*.cov
+*.mem
+*.cov
+*.o
+deps/deps.jl
+deps/build.log
+deps/downloads/
+deps/usr/
+
+# --- Data Files (Important) ---
+# Ignore large datasets so you don't push 300MB CSVs to GitHub
+*.csv
+*.dmd
+*.dat
+data/
+
+# --- IDE & Editors ---
+# VS Code
+.vscode/
+*.code-workspace
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# --- OS Generated Files ---
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# --- Deployment Note ---
+# DO NOT IGNORE Manifest.toml for Apps!
+# Render needs Manifest.toml to know exactly which package versions to install.
+# If you see Manifest.toml in other gitignores, remove it from the list for this project.
