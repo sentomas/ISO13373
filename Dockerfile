@@ -1,24 +1,26 @@
-# 1. Use the official Julia image
+# 1. Use Julia Image
 FROM julia:1.10
 
-# 2. Set the working directory inside the container
+# 2. Setup App Directory
 WORKDIR /app
 
-# 3. Copy Project.toml and Manifest.toml first (for caching)
-COPY Project.toml ./
- # Manifest.toml ./
+# 3. Copy Project Definitions
+COPY Project.toml Manifest.toml ./
 
-# 4. Install dependencies
-# This step builds the packages inside the container
-RUN julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
+# --- SAFETY FIX ---
+# Delete the Windows-generated Manifest so we build a fresh one for Linux
+RUN rm -f Manifest.toml
 
-# 5. Copy the rest of the application code
+# 4. Install Dependencies
+# This forces a fresh resolve of all packages
+RUN julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.resolve(); Pkg.precompile()'
+
+# 5. Copy Source Code
 COPY . .
 
-# 6. Expose the port (Render usually uses 10000, but we bind to $PORT)
+# 6. Expose Port
 ENV PORT=8080
 EXPOSE 8080
 
-# 7. Start the app
-# "web" matches your Procfile, or we can run directly:
+# 7. Start the App
 CMD ["julia", "--project=.", "src/ISO13373.jl"]
